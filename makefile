@@ -1,6 +1,7 @@
 CC=g++
-CFLAGS=-s -Wall -O3 -std=c++11
+CFLAGS=-Wall -O3 -std=c++11
 ifeq ($(OS), Windows_NT)
+	CFLAGS+=-s
 	RM=del
 	OUTPUT=fraction.exe
 else

@@ -26,22 +26,18 @@ public:
 private:
     void run();
     int menu();
-    void input();
-    void output(char op);
+    void input(CFraction & lhs, CFraction & rhs);
+    void output(CFraction & lhs, CFraction &rhs, CFraction & result, char op);
 
-    void add();
-    void sub();
-    void mul();
-    void div();
+    void add(CFraction & lhs, CFraction & rhs, CFraction & result);
+    void sub(CFraction & lhs, CFraction & rhs, CFraction & result);
+    void mul(CFraction & lhs, CFraction & rhs, CFraction & result);
+    void div(CFraction & lhs, CFraction & rhs, CFraction & result);
     void reduce();
 
     // helpers
     void pause(std::string msg);
     void clearScreen();
-
-    CFraction   lhs;
-    CFraction   rhs;
-    CFraction   result;
 };
 
 FractionTest::FractionTest()
@@ -58,22 +54,23 @@ void FractionTest::run()
 {
     int         choice;
     bool        done = false;
+    CFraction   lhs, rhs, result;
 
     do {
         choice = menu();
         switch(choice)
         {
         case 1:
-            add();
+            add(lhs, rhs, result);
             break;
         case 2:
-            sub();
+            sub(lhs, rhs, result);
             break;
         case 3:
-            mul();
+            mul(lhs, rhs, result);
             break;
         case 4:
-            div();
+            div(lhs, rhs, result);
             break;
         case 5:
             reduce();
@@ -132,13 +129,13 @@ void FractionTest::clearScreen()
 #endif
 }
 
-void FractionTest::input()
+void FractionTest::input(CFraction & lhs, CFraction & rhs)
 {
     cout << "Fraction A: "; cin >> lhs;
     cout << "Fraction B: "; cin >> rhs;
 }
 
-void FractionTest::output(char op)
+void FractionTest::output(CFraction & lhs, CFraction &rhs, CFraction & result, char op)
 {
     if (CFraction::autoReduce)
     {
@@ -154,43 +151,44 @@ void FractionTest::output(char op)
     }
 }
 
-void FractionTest::add()
+void FractionTest::add(CFraction & lhs, CFraction &rhs, CFraction & result)
 {
-    input();
+    input(lhs, rhs);
     result = lhs + rhs;
-    output('+');
+    output(lhs, rhs, result, '+');
     pause(msgPause);
 }
 
-void FractionTest::sub()
+void FractionTest::sub(CFraction & lhs, CFraction &rhs, CFraction & result)
 {
-    input();
+    input(lhs, rhs);
     result = lhs - rhs;
-    output('-');
+    output(lhs, rhs, result, '-');
     pause(msgPause);
 }
 
-void FractionTest::mul()
+void FractionTest::mul(CFraction & lhs, CFraction &rhs, CFraction & result)
 {
-    input();
+    input(lhs, rhs);
     result = lhs * rhs;
-    output('*');
+    output(lhs, rhs, result, '*');
     pause(msgPause);
 }
 
-void FractionTest::div()
+void FractionTest::div(CFraction & lhs, CFraction &rhs, CFraction & result)
 {
-    input();
+    input(lhs, rhs);
     result = lhs / rhs;
-    output('/');
+    output(lhs, rhs, result, '/');
     pause(msgPause);
 }
 
 void FractionTest::reduce()
 {
+    CFraction   f;
     cout << "Fraction: ";
-    cin >> result;
-    cout << "Result: " << result.reduce() << endl;
+    cin >> f;
+    cout << "Result: " << f.reduce() << endl;
     pause(msgPause);
 }
 
